@@ -1,1 +1,0 @@
-import{a as e,h as t,m as n,o as r,t as i,u as a}from"./index-B45dNL5D.js";var o={class:`user`},s={class:`alert alert-danger mt-5`,role:`alert`},c={__name:`UserPosts`,setup(c){let l=i();return(i,c)=>(a(),r(`div`,o,[e(`div`,s,` 用戶 `+t(n(l).params.id)+` 文章列表 `,1)]))}};export{c as default};

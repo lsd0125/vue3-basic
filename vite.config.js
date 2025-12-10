@@ -4,7 +4,5 @@ import vue from "@vitejs/plugin-vue";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  build: {
-    outDir: "docs", // ← 自訂資料夾名稱
-  },
+  base: "/vue3-basic/",
 });
