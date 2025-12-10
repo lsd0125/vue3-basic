@@ -34,13 +34,13 @@ watch(
   <div>
     <p>其他內容 &nbsp;
       <RouterLink class="btn btn-outline-primary" 
-        to="/post/爬山/7?b=go">爬山趣</RouterLink>
+        to="/vue3-basic/post/爬山/7?b=go">爬山趣</RouterLink>
       &nbsp;
       <RouterLink class="btn btn-outline-success" 
-        to="/post/休閒/8?c=您好">看見螢火蟲</RouterLink>
+        to="/vue3-basic/post/休閒/8?c=您好">看見螢火蟲</RouterLink>
       &nbsp;
       <RouterLink class="btn btn-outline-success" 
-        to="/post/休閒/8?c=再來">看見螢火蟲2</RouterLink>
+        to="/vue3-basic/post/休閒/8?c=再來">看見螢火蟲2</RouterLink>
     </p>
   </div>
 </template>

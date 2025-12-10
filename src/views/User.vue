@@ -11,9 +11,9 @@ const userId = computed(() => route.params.id)
     <h1>用戶: {{ userId }}</h1>
 
     <nav>
-      <RouterLink :to="`/user/${userId}`">個人首頁</RouterLink>
-      <RouterLink :to="`/user/${userId}/profile`">個人資料</RouterLink>
-      <RouterLink :to="`/user/${userId}/posts`">文章列表</RouterLink>
+      <RouterLink :to="`/vue3-basic/user/${userId}`">個人首頁</RouterLink>
+      <RouterLink :to="`/vue3-basic/user/${userId}/profile`">個人資料</RouterLink>
+      <RouterLink :to="`/vue3-basic/user/${userId}/posts`">文章列表</RouterLink>
     </nav>
 
     <!-- 子路由會顯示在這裡 -->
