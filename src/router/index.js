@@ -8,21 +8,26 @@ import Cart from "../views/Cart.vue";
 const routes = [
   {
     path: "/",
+    name: "RootHome",
+    component: Home,
+  },
+  {
+    path: "/vue3-basic",
     name: "Home",
     component: Home,
   },
   {
-    path: "/about",
+    path: "/vue3-basic/about",
     name: "About",
     component: About,
   },
   {
-    path: "/post/:category/:id",
+    path: "/vue3-basic/post/:category/:id",
     name: "Post",
     component: () => import("../views/Post.vue"),
   },
   {
-    path: "/user/:id",
+    path: "/vue3-basic/user/:id",
     component: () => import("../views/User.vue"),
     children: [
       {
@@ -43,12 +48,12 @@ const routes = [
     ],
   },
   {
-    path: "/products",
+    path: "/vue3-basic/products",
     name: "products",
     component: ProductList,
   },
   {
-    path: "/cart",
+    path: "/vue3-basic/cart",
     name: "cart",
     component: Cart,
   },
