@@ -52,9 +52,10 @@ git push -u origin main
    - 點選「Save」
    - 等待幾分鐘後，網站會部署到 `https://your-username.github.io/my-website/`
 
-![前往 Repository 的「Settings」](https://lsd0125.github.io/vue3-basic/images/github-repo-settings.png)
-
-![Source 選擇「GitHub Actions」](https://lsd0125.github.io/vue3-basic/images/github-repo-pages-source.png)
+<img src="/vue3-basic/images/github-repo-settings.png" alt="前往 Repository 的「Settings」" />
+<br />
+<br />
+<img src="/vue3-basic/images/github-repo-pages-source.png" alt="Source 選擇「GitHub Actions」" />
 
 ## GitHub Pages 的用途
 
