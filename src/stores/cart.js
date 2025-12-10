@@ -56,7 +56,7 @@ export const useCartStore = defineStore("cart", () => {
   // 模擬從 API 獲取商品列表 (教學用途)
   async function fetchProducts() {
     try {
-      const response = await fetch("/data/products.json");
+      const response = await fetch("/vue3-basic/data/products.json");
       productList.value = await response.json();
       console.log(productList.value);
       
