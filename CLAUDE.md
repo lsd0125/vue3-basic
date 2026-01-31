@@ -17,113 +17,82 @@ pnpm build
 
 # 預覽建置結果
 pnpm preview
+
+# 建置並部署到 Cloudflare Pages
+pnpm deploy
 ```
 
 ## 部署
 
-專案使用 GitHub Actions 自動部署到 GitHub Pages：
+專案有兩種部署方式：
+
+### GitHub Pages（`main` 分支）
 
 - Workflow 檔案：`.github/workflows/deploy.yml`
 - 觸發條件：push 到 `main` 分支
-- 部署來源：需在 Repository Settings → Pages 中選擇 "GitHub Actions"
-- 網站 URL：`https://<username>.github.io/vue3-basic/`
+- `vite.config.js` 設定 `base: "/vue3-basic/"`
+- 詳細說明：`README.md`
+
+### Cloudflare Pages（`root-directory` 分支）
+
+- 指令：`pnpm deploy`（透過 wrangler pages deploy）
+- 專案名稱：`vue3-basic`
+- `vite.config.js` 未設定 base path（使用根目錄 `/`）
+- 詳細說明：`cloudflare-pages-deploy.md`
 
 ## 技術架構
 
 ### 核心技術棧
 
-- **Vue 3.5.22** - 使用 `<script setup>` 語法和 Composition API
-- **Vite 7.1.14** - 使用 rolldown-vite 版本
-- **Vue Router 4.6.3** - 路由管理，支援巢狀路由與動態路由
-- **Pinia 3.0.3** - 狀態管理，使用 Composition API 風格
+- **Vue 3** - 使用 `<script setup>` 語法和 Composition API
+- **Vite (rolldown-vite)** - 透過 pnpm overrides 將 vite 替換為 rolldown-vite
+- **Vue Router** - 路由管理，使用 `createWebHistory` 模式，支援巢狀路由與動態路由
+- **Pinia** - 狀態管理，使用 Composition API 風格（`defineStore` + 箭頭函數）
 - **pinia-plugin-persistedstate** - 狀態持久化（使用 sessionStorage）
-
-### 建置設定
-
-- 專案設定了 `base: "/vue3-basic/"` 用於部署到 GitHub Pages
-- 建置輸出目錄為預設的 `dist/`
+- **Bootstrap 5** - 透過 CDN 引入於 `index.html`
 
 ## 程式碼結構
 
 ### 應用程式入口點
 
-`src/main.js` 是應用程式的進入點，初始化順序為：
+`src/main.js` 初始化順序：Pinia（含 persistedstate 插件）→ Vue Router → 掛載到 #app
 
-1. 建立 Pinia instance 並註冊 persistedstate 插件
-2. 註冊 Pinia 到 Vue app
-3. 註冊 Vue Router
-4. 掛載應用程式到 #app
+### 狀態管理
 
-### 狀態管理架構
-
-專案使用 **Pinia Composition API 風格**：
-
-- Store 定義在 `src/stores/` 目錄
-- 使用 `defineStore` 配合箭頭函數返回 state、getters、actions
-- 範例：`useCartStore` (src/stores/cart.js)
-  - State: `items` (購物車項目), `productList` (商品列表)
-  - Getters: `quantity` (總數量), `totalPrice` (總價格)
-  - Actions: `addItem`, `removeItem`, `clearCart`, `fetchProducts`
-  - 持久化設定：使用 sessionStorage，key 為 `cinder-cart-store`
+- Store 定義在 `src/stores/`，使用 Pinia Composition API 風格
+- 持久化使用 sessionStorage（關閉瀏覽器即清除）
 
 ### 路由架構
 
 路由設定於 `src/router/index.js`：
 
-- 使用 `createWebHistory` 模式
-- 混合使用靜態導入（Home, About）與動態導入（Post, User 相關頁面）
-- 支援巢狀路由：`/user/:id` 下有子路由 (profile, posts)
-- 動態路由參數：`/post/:category/:id`, `/user/:id`
+- 混合使用靜態導入與動態導入（lazy loading）
+- 巢狀路由：`/user/:id` 下有子路由 (profile, posts)
+- 動態路由參數：`/post/:category/:id`
 
 ### 元件組織結構
 
-**學習範例元件** (`src/components/learning/`)
+學習範例元件依字母前綴分類，每系列以 10 為間距遞增編號：
 
-- 依字母前綴組織：A 系列（基礎）、C 系列（computed/watch）、E 系列（生命週期）
-- 檔名採用 PascalCase 並包含兩位數字前綴（如 A10_MyRef.vue）
+| 目錄 | 前綴 | 主題 |
+|------|------|------|
+| `src/components/learning/` | A 系列 | 基礎（ref, reactive, 事件, 迴圈） |
+| `src/components/learning/` | C 系列 | computed 與 watch |
+| `src/components/learning/` | E 系列 | 生命週期、AJAX、錯誤處理 |
+| `src/components/communications/` | D 系列 | 元件通訊（props, emits, provide/inject） |
+| `src/components/slots/` | B 系列 | Slot 使用方式 |
 
-**通訊範例元件** (`src/components/communications/`)
-
-- D 系列：展示父子元件通訊（props, emits, provide/inject）
-- 使用數字前綴表示學習順序（D10, D20...）
-
-**插槽範例元件** (`src/components/slots/`)
-
-- B 系列：展示 slot 的各種使用方式
-
-**頁面元件** (`src/views/`)
-
-- 路由對應的頁面元件
-- 包含巢狀路由的子頁面（User 系列）
-
-### 資料來源
-
-- 靜態資料檔案位於 `public/data/`（countries.json, products.json）
-- 圖片資源位於 `public/images/`
-- Store 透過 fetch API 從 `/data/products.json` 讀取商品資料
+頁面元件位於 `src/views/`，靜態資料位於 `public/data/`。
 
 ## 編碼慣例
 
-### Vue 元件風格
-
-- 統一使用 `<script setup>` 語法
-- 使用 Composition API (`ref`, `reactive`, `computed` 等)
-- 元件檔名使用 PascalCase
-
-### 命名規範
-
-- Store: 使用 `use` 前綴（如 `useCartStore`）
-- 元件事件：使用小寫加連字號（如元件內部定義）
-- Props/Emits: 在 `<script setup>` 中使用 `defineProps()` 和 `defineEmits()`
-
-### 注釋語言
-
-- 程式碼註解使用**正體中文**
-- 變數、函數名稱使用英文
+- 統一使用 `<script setup>` 語法與 Composition API
+- 元件檔名使用 PascalCase，學習範例加字母+兩位數字前綴（如 `A10_MyRef.vue`）
+- Store 使用 `use` 前綴（如 `useCartStore`）
+- Props/Emits 使用 `defineProps()` 和 `defineEmits()`
+- 程式碼註解使用**正體中文**，變數與函數名稱使用英文
 
 ## 注意事項
 
-1. **路由 base path**: 所有路由和資源路徑需考慮 `/vue3-basic/` 的 base path
-2. **狀態持久化**: 購物車 store 使用 sessionStorage，關閉瀏覽器後資料會清除
-3. **套件管理**: 專案使用 pnpm，且覆寫了 vite 套件為 rolldown-vite 版本
-4. **元件命名**: 學習範例元件使用字母+數字前綴系統，新增元件時請遵循相同規則
+1. **套件管理**: 專案使用 pnpm，且透過 overrides 將 vite 替換為 rolldown-vite
+2. **元件命名**: 新增學習範例元件時，遵循字母+數字前綴系統，以 10 為間距

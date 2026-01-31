@@ -9,6 +9,8 @@ GitHub Pages 可以免費託管靜態網站。
 
 可以使用前端的 HTML、CSS、JavaScript 和圖檔等靜態檔案建立。或使用範例程式庫 <https://github.com/lsd0125/vue3-basic> 本專案。
 
+**注意使用 main 分支**
+
 ```bash
 # 複製專案（程式庫、repository）下來
 git clone https://github.com/lsd0125/vue3-basic.git

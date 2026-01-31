@@ -40,12 +40,12 @@ export default defineConfig({
 
 在建置設定頁面輸入以下資訊：
 
-| 設定項目 | 值 |
-|---------|-----|
-| **Framework preset** | Vue |
-| **Build command** | `pnpm build` |
-| **Build output directory** | `dist` |
-| **Root directory** | (留空) |
+| 設定項目                   | 值           |
+| -------------------------- | ------------ |
+| **Framework preset**       | Vue          |
+| **Build command**          | `pnpm build` |
+| **Build output directory** | `dist`       |
+| **Root directory**         | (留空)       |
 
 **環境變數**：
 
