@@ -2,6 +2,7 @@
 
 GitHub Pages 可以免費託管靜態網站。
 範例網站 <https://lsd0125.github.io/vue3-basic/> 。
+**這個範例使用 main 分支**
 
 ## 啟用 GitHub Pages
 
@@ -73,4 +74,3 @@ git push -u origin main
    ```text
    CNAME: your-username.github.io
    ```
-
